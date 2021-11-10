@@ -1,3 +1,51 @@
 {
-  "extends": "next/core-web-vitals"
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": ["next", "plugin:react/recommended", "airbnb", "prettier"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 12,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-hooks", "import", "jsx-a11y", "prettier"],
+  "rules": {
+    "no-use-before-define": "off",
+    "semi": 0,
+    "no-param-reassign": 0,
+    "global-require": "off",
+    "prettier/prettier": [
+      "error",
+      { "singleQuote": true, "semi": false, "endOfLine": "auto" }
+    ],
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
+    ],
+
+    "react/state-in-constructor": "off",
+    "import/no-extraneous-dependencies": "off",
+    "react/jsx-props-no-spreading": "off",
+    "jsx-a11y/img-redundant-alt": "off",
+    "import/prefer-default-export": "off",
+    "no-nested-ternary": "off",
+    "react/no-array-index-key": "off",
+    "no-underscore-dangle": "off",
+    "no-restricted-syntax": [
+      "error",
+      "ForInStatement",
+      "LabeledStatement",
+      "WithStatement"
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["."]
+      }
+    }
+  }
 }

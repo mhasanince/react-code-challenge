@@ -8,12 +8,31 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.4.16",
+    "graphql": "^15.7.2",
     "next": "12.0.3",
+    "prop-types": "^15.7.2",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-datepicker": "^4.3.0",
+    "react-dom": "17.0.2",
+    "react-hook-form": "^7.19.1",
+    "react-nice-avatar": "^1.2.4",
+    "react-table": "^7.7.0",
+    "styled-components": "^5.3.3",
+    "styled-icons": "^10.45.0",
+    "styled-reset": "^4.3.4"
   },
   "devDependencies": {
+    "babel-plugin-styled-components": "^1.13.3",
     "eslint": "7.32.0",
-    "eslint-config-next": "12.0.3"
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-next": "^12.0.3",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-next": "^0.0.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-react": "^7.26.1",
+    "eslint-plugin-react-hooks": "^4.2.0"
   }
 }
