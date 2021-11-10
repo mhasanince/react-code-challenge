@@ -7,6 +7,11 @@ import UserForm from 'components/UserForm'
 const CREATE_USER = gql`
   mutation Insert_users($object: users_insert_input!) {
     insert_users_one(object: $object) {
+      date_of_birth
+      email
+      lastname
+      name
+      phone
       id
     }
   }
@@ -23,8 +28,8 @@ const NewUser = () => {
           ...data,
         },
       },
-    }).then((res) => {
-      router.push(`/users/${res.data.insert_users_one.id}`)
+    }).then(() => {
+      router.push(`/users`)
     })
   }
 

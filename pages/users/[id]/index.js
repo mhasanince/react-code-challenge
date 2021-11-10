@@ -46,7 +46,12 @@ const GET_USER = gql`
 const DELETE_USER = gql`
   mutation Delete_users_by_pk($deleteUsersByPkId: Int!) {
     delete_users_by_pk(id: $deleteUsersByPkId) {
+      date_of_birth
+      email
       id
+      lastname
+      name
+      phone
     }
   }
 `
@@ -69,6 +74,7 @@ const User = () => {
 
   if (loading) return <p>Loading...</p>
   if (error) return <p>Error :(</p>
+  if (data.users_by_pk === null) return <p>User not found</p>
 
   return (
     <FlexContainer>
