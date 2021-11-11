@@ -10,6 +10,10 @@ const StyledHeader = styled.header`
   height: 4rem;
   padding: 1rem 2rem;
   border-bottom: ${(props) => `1px solid ${props.theme.colors.border}`};
+
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}px) {
+    display: none;
+  }
 `
 const Profile = styled.div`
   display: flex;

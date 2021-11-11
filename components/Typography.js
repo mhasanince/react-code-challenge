@@ -30,28 +30,39 @@ const VARIANTS = {
 }
 
 const Component = styled.div`
-  font-size: ${(props) => VARIANTS[props.variant].fontSize};
-  font-weight: ${(props) => VARIANTS[props.variant].fontWeight};
+  font-size: ${({ variant }) => VARIANTS[variant].fontSize};
+  font-weight: ${({ variant }) => VARIANTS[variant].fontWeight};
   text-decoration: none;
   color: ${({ color, theme }) => theme.colors[color]};
+  text-align: ${({ align }) => align};
 `
 
-const Typography = forwardRef(({ children, variant, color, ...props }, ref) => (
-  <Component {...props} variant={variant} color={color} ref={ref}>
-    {children}
-  </Component>
-))
+const Typography = forwardRef(
+  ({ children, variant, color, align, ...props }, ref) => (
+    <Component
+      {...props}
+      variant={variant}
+      color={color}
+      align={align}
+      ref={ref}
+    >
+      {children}
+    </Component>
+  )
+)
 
 Typography.propTypes = {
   children: PropTypes.node,
   variant: PropTypes.oneOf(Object.keys(VARIANTS)),
   color: PropTypes.string,
+  align: PropTypes.oneOf(['left', 'center', 'right']),
 }
 
 Typography.defaultProps = {
   children: null,
   variant: 'body1',
   color: 'inherit',
+  align: 'left',
 }
 
 export default Typography

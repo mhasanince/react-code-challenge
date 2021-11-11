@@ -33,6 +33,7 @@ export default class MyDocument extends Document {
     return (
       <Html>
         <Head>
+          <meta name="description" content="90Pixel React Code Challenge" />
           <link rel="preconnect" href="https://fonts.googleapis.com" />
           <link
             rel="preconnect"

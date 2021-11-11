@@ -19,13 +19,18 @@ const GlobalStyles = createGlobalStyle`
 const theme = {
   colors: {
     primary: '#212121',
-    secondary: '#ff9800',
     success: '#4caf50',
     danger: '#f44336',
     warning: '#ffc107',
     text: '#212121',
-    background: '#fafafa',
     border: 'rgba(0, 0, 0, 0.1)',
+  },
+  breakpoints: {
+    xs: 0,
+    sm: 576,
+    md: 768,
+    lg: 992,
+    xl: 1200,
   },
 }
 

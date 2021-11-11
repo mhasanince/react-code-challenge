@@ -5,14 +5,18 @@ import styled from 'styled-components'
 
 import Navbar from 'components/Navbar'
 import Header from 'components/Header'
+import MobileNavbar from 'components/MobileNavbar'
 
 const Main = styled.main`
   padding-left: 300px;
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}px) {
+    padding-left: 0;
+    padding-top: 74px;
+  }
 `
 
 const Container = styled.div`
   margin: 1.5rem auto;
-  /* max-width: 960px; */
   padding: 0 1.5rem;
 `
 
@@ -20,9 +24,9 @@ const AuthenticatedLayout = ({ children }) => (
   <>
     <Head>
       <title>90Pixel React Code Challenge</title>
-      <meta name="description" content="90Pixel React Code Challenge" />
     </Head>
     <Navbar />
+    <MobileNavbar />
     <Main>
       <Header />
       <Container>{children}</Container>

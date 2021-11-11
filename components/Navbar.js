@@ -17,6 +17,10 @@ const Aside = styled.aside`
   padding: 1rem;
   border-right: ${(props) => `1px solid ${props.theme.colors.border}`};
   gap: 6rem;
+
+  @media (max-width: ${(props) => props.theme.breakpoints.lg}px) {
+    display: none;
+  }
 `
 
 const NavbarItems = styled.ul`
@@ -33,14 +37,28 @@ const NavbarItem = styled.li`
   cursor: pointer;
 `
 
+const LogoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const Logo = styled.img`
+  width: 128px;
+  height: auto;
+`
+
 const Navbar = () => {
   const router = useRouter()
 
   return (
     <Aside>
-      <Typography as="span" variant="h1">
-        90Pixel React Code Challenge
-      </Typography>
+      <LogoContainer>
+        <Logo src="https://90pixel-frontend-code-challenge.vercel.app/logo.svg" />
+        <Typography variant="h1" align="center">
+          React Code Challenge
+        </Typography>
+      </LogoContainer>
       <nav>
         <NavbarItems>
           {ROUTES.map((item, index) => {

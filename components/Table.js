@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { useTable, useSortBy } from 'react-table'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import {
   ArrowSort,
   ArrowSortUp,
@@ -36,9 +36,18 @@ const TR = styled.tr`
 `
 
 const TH = styled.th`
+  min-width: 150px;
   text-align: left;
   padding: 1rem;
   font-weight: 700;
+
+  ${({ isActions }) =>
+    isActions &&
+    css`
+      &:last-child {
+        min-width: 80px;
+      }
+    `}
 `
 
 const TD = styled.td`
@@ -66,7 +75,10 @@ const Table = ({ initialState, columns, data, onClickRow }) => {
           {headerGroups.map((headerGroup) => (
             <TR {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <TH {...column.getHeaderProps(column.getSortByToggleProps())}>
+                <TH
+                  {...column.getHeaderProps(column.getSortByToggleProps())}
+                  isActions={!!(column.id === 'actions')}
+                >
                   {column.render('Header')}
                   {column.accessor && (
                     <SortIconsWrapper>
