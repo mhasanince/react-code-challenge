@@ -48,6 +48,7 @@ export default class MyDocument extends Document {
         <body>
           <Main />
           <NextScript />
+          <div id="loading-spinner" />
         </body>
       </Html>
     )

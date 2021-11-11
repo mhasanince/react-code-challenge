@@ -20,5 +20,5 @@ export default (id) => {
     await deleteUserById({ variables: { deleteUsersByPkId: id || userId } })
   }
 
-  return [deleteUser, result]
+  return [deleteUser, { ...result }]
 }

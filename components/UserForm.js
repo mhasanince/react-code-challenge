@@ -85,7 +85,6 @@ const UserForm = ({ onSubmit }) => {
         />
         <Input
           label="Email"
-          type="email"
           {...register('email')}
           error={errors.email?.message}
         />

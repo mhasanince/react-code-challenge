@@ -34,5 +34,5 @@ export default () => {
     })
   }
 
-  return [update, result]
+  return [update, { ...result }]
 }

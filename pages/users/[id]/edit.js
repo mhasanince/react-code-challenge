@@ -16,10 +16,14 @@ const User = () => {
     })
   }
 
-  if (loading) return <Spinner />
   if (error) return `Submission error! ${error.message}`
 
-  return <UserForm onSubmit={onSubmit} />
+  return (
+    <>
+      {loading && <Spinner />}
+      <UserForm onSubmit={onSubmit} />
+    </>
+  )
 }
 
 export default User

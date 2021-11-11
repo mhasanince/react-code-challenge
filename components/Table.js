@@ -58,6 +58,12 @@ const SortIconsWrapper = styled.span`
   margin-left: 0.5rem;
 `
 
+const Center = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
 const Table = ({ initialState, columns, data, onClickRow }) => {
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable(
@@ -99,23 +105,31 @@ const Table = ({ initialState, columns, data, onClickRow }) => {
           ))}
         </THead>
         <TBody {...getTableBodyProps()}>
-          {rows.map((row) => {
-            prepareRow(row)
-            return (
-              <TR
-                {...row.getRowProps()}
-                onClick={() => onClickRow(row.original)}
-              >
-                {row.cells.map((cell) => (
-                  <TD {...cell.getCellProps()}>
-                    {cell.value || cell.column.id === 'actions'
-                      ? cell.render('Cell')
-                      : '-'}
-                  </TD>
-                ))}
-              </TR>
-            )
-          })}
+          {rows.length > 0 ? (
+            rows.map((row) => {
+              prepareRow(row)
+              return (
+                <TR
+                  {...row.getRowProps()}
+                  onClick={() => onClickRow(row.original)}
+                >
+                  {row.cells.map((cell) => (
+                    <TD {...cell.getCellProps()}>
+                      {cell.value || cell.column.id === 'actions'
+                        ? cell.render('Cell')
+                        : '-'}
+                    </TD>
+                  ))}
+                </TR>
+              )
+            })
+          ) : (
+            <TR>
+              <TD colSpan={columns.length}>
+                <Center>No data</Center>
+              </TD>
+            </TR>
+          )}
         </TBody>
       </StyledTable>
     </TableContainer>
@@ -125,12 +139,13 @@ const Table = ({ initialState, columns, data, onClickRow }) => {
 Table.propTypes = {
   initialState: PropTypes.shape(),
   columns: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  data: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  data: PropTypes.arrayOf(PropTypes.shape),
   onClickRow: PropTypes.func,
 }
 
 Table.defaultProps = {
   initialState: {},
+  data: [],
   onClickRow: () => {},
 }
 

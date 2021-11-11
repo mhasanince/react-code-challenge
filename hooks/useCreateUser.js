@@ -26,5 +26,5 @@ export default () => {
     })
   }
 
-  return [create, result]
+  return [create, { ...result }]
 }

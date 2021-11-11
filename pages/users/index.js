@@ -24,7 +24,7 @@ const ItemsRight = styled.div`
 const Users = () => {
   const router = useRouter()
   const { data, loading, error, refetch } = useUsers()
-  const [deleteUser] = useDeleteUser()
+  const [deleteUser, { loading: deleteUserLoading }] = useDeleteUser()
   const initialState = useMemo(
     () => ({ sortBy: [{ id: 'id', desc: true }] }),
     []
@@ -65,23 +65,25 @@ const Users = () => {
     [router, deleteUser, refetch]
   )
 
-  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
 
   return (
-    <FlexContainer>
-      <ItemsRight>
-        <Button type="button" onClick={() => router.push('/users/new-user')}>
-          New User
-        </Button>
-      </ItemsRight>
-      <Table
-        initialState={initialState}
-        columns={columns}
-        data={data.users}
-        onClickRow={({ id }) => router.push(`/users/${id}`)}
-      />
-    </FlexContainer>
+    <>
+      {(loading || deleteUserLoading) && <Spinner />}
+      <FlexContainer>
+        <ItemsRight>
+          <Button type="button" onClick={() => router.push('/users/new-user')}>
+            New User
+          </Button>
+        </ItemsRight>
+        <Table
+          initialState={initialState}
+          columns={columns}
+          data={data?.users}
+          onClickRow={({ id }) => router.push(`/users/${id}`)}
+        />
+      </FlexContainer>
+    </>
   )
 }
 
