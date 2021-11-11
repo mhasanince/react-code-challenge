@@ -14,7 +14,9 @@ const CREATE_USER = gql`
 `
 
 export default () => {
-  const [createUser, result] = useMutation(CREATE_USER)
+  const [createUser, result] = useMutation(CREATE_USER, {
+    refetchQueries: ['Users'],
+  })
 
   const create = async (user) => {
     await createUser({

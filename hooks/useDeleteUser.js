@@ -14,7 +14,9 @@ const DELETE_USER = gql`
 `
 
 export default (id) => {
-  const [deleteUserById, result] = useMutation(DELETE_USER)
+  const [deleteUserById, result] = useMutation(DELETE_USER, {
+    refetchQueries: ['Users'],
+  })
 
   const deleteUser = async (userId) => {
     await deleteUserById({ variables: { deleteUsersByPkId: id || userId } })

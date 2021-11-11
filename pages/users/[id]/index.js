@@ -44,41 +44,43 @@ const User = () => {
   const router = useRouter()
   const { id } = router.query
   const { data, loading, error } = useUser({ id })
-  const [deleteUser] = useDeleteUser(id)
+  const [deleteUser, { loading: deleteUserLoading }] = useDeleteUser(id)
 
-  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
-  if (data.users_by_pk === null) return <p>User not found</p>
+  if (data?.users_by_pk === null) return <p>User not found</p>
 
   return (
-    <FlexContainer>
-      <ItemsRight>
-        <Button
-          type="button"
-          color="warning"
-          onClick={() => router.push(`/users/${id}/edit`)}
-        >
-          Edit
-        </Button>
-        <Button
-          type="button"
-          color="danger"
-          onClick={() => deleteUser().then(() => router.push('/users'))}
-        >
-          Delete
-        </Button>
-      </ItemsRight>
-      <UserContainer>
-        {USER_TEMPLATE.map(({ field, label }, index) => (
-          <InfoContainer key={index}>
-            <Typography as="h3" variant="h3">
-              {label}
-            </Typography>
-            <Typography>{data.users_by_pk[field] || '-'}</Typography>
-          </InfoContainer>
-        ))}
-      </UserContainer>
-    </FlexContainer>
+    <>
+      {(loading || deleteUserLoading) && <Spinner />}
+      <FlexContainer>
+        <ItemsRight>
+          <Button
+            type="button"
+            color="warning"
+            onClick={() => router.push(`/users/${id}/edit`)}
+          >
+            Edit
+          </Button>
+          <Button
+            type="button"
+            color="danger"
+            onClick={() => deleteUser().then(() => router.push('/users'))}
+          >
+            Delete
+          </Button>
+        </ItemsRight>
+        <UserContainer>
+          {USER_TEMPLATE.map(({ field, label }, index) => (
+            <InfoContainer key={index}>
+              <Typography as="h3" variant="h3">
+                {label}
+              </Typography>
+              <Typography>{data?.users_by_pk[field] || '-'}</Typography>
+            </InfoContainer>
+          ))}
+        </UserContainer>
+      </FlexContainer>
+    </>
   )
 }
 
