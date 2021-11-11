@@ -36,7 +36,7 @@ const UserForm = ({ onSubmit }) => {
     if (user) {
       reset(user.users_by_pk)
     }
-  }, [user])
+  }, [user, reset])
 
   if (userLoading) return <Spinner />
   if (userError) return `Error! ${userError.message}`

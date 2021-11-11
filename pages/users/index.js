@@ -62,7 +62,7 @@ const Users = () => {
         onClickDelete: ({ id }) => deleteUser(id).then(() => refetch()),
       },
     ],
-    []
+    [router, deleteUser, refetch]
   )
 
   if (loading) return <Spinner />
