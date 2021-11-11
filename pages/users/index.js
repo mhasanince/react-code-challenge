@@ -1,7 +1,8 @@
 import React, { useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { useQuery, gql, useMutation } from '@apollo/client'
 import styled from 'styled-components'
+import useUsers from 'hooks/useUsers'
+import useDeleteUser from 'hooks/useDeleteUser'
 
 import Table from 'components/Table'
 import Spinner from 'components/Spinner'
@@ -20,32 +21,10 @@ const ItemsRight = styled.div`
   gap: 1rem;
 `
 
-const GET_USERS = gql`
-  query Users {
-    users {
-      date_of_birth
-      email
-      id
-      lastname
-      name
-      phone
-    }
-  }
-`
-
-const DELETE_USER = gql`
-  mutation Delete_users_by_pk($deleteUsersByPkId: Int!) {
-    delete_users_by_pk(id: $deleteUsersByPkId) {
-      id
-    }
-  }
-`
-
 const Users = () => {
   const router = useRouter()
-  const { data, loading, error, refetch } = useQuery(GET_USERS)
-  const [deleteUser] = useMutation(DELETE_USER)
-
+  const { data, loading, error, refetch } = useUsers()
+  const [deleteUser] = useDeleteUser()
   const initialState = useMemo(
     () => ({ sortBy: [{ id: 'id', desc: true }] }),
     []
@@ -80,10 +59,7 @@ const Users = () => {
         id: 'actions',
         Cell: TableActions,
         onClickEdit: ({ id }) => router.push(`/users/${id}/edit`),
-        onClickDelete: ({ id }) =>
-          deleteUser({ variables: { deleteUsersByPkId: id } }).then(() =>
-            refetch()
-          ),
+        onClickDelete: ({ id }) => deleteUser(id).then(() => refetch()),
       },
     ],
     []

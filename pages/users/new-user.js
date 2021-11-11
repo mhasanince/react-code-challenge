@@ -1,39 +1,21 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { gql, useMutation } from '@apollo/client'
+import useCreateUser from 'hooks/useCreateUser'
 
 import UserForm from 'components/UserForm'
-
-const CREATE_USER = gql`
-  mutation Insert_users($object: users_insert_input!) {
-    insert_users_one(object: $object) {
-      date_of_birth
-      email
-      lastname
-      name
-      phone
-      id
-    }
-  }
-`
+import Spinner from 'components/Spinner'
 
 const NewUser = () => {
   const router = useRouter()
-  const [createUser, { loading, error }] = useMutation(CREATE_USER)
+  const [create, { loading, error }] = useCreateUser()
 
   const onSubmit = ({ __typename, ...data }) => {
-    createUser({
-      variables: {
-        object: {
-          ...data,
-        },
-      },
-    }).then(() => {
+    create(data).then(() => {
       router.push(`/users`)
     })
   }
 
-  if (loading) return 'Creating...'
+  if (loading) return <Spinner />
   if (error) return `Creation error! ${error.message}`
 
   return <UserForm onSubmit={onSubmit} />

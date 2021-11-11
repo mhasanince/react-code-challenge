@@ -1,10 +1,12 @@
 import React from 'react'
 import { useRouter } from 'next/router'
-import { gql, useMutation, useQuery } from '@apollo/client'
 import styled from 'styled-components'
+import useUser from 'hooks/useUser'
+import useDeleteUser from 'hooks/useDeleteUser'
 
 import Typography from 'components/Typography'
 import Button from 'components/Button'
+import Spinner from 'components/Spinner'
 
 const FlexContainer = styled.div`
   display: flex;
@@ -30,32 +32,6 @@ const InfoContainer = styled.div`
   gap: 0.5rem;
 `
 
-const GET_USER = gql`
-  query Users_by_pk($usersByPkId: Int!) {
-    users_by_pk(id: $usersByPkId) {
-      date_of_birth
-      email
-      id
-      lastname
-      name
-      phone
-    }
-  }
-`
-
-const DELETE_USER = gql`
-  mutation Delete_users_by_pk($deleteUsersByPkId: Int!) {
-    delete_users_by_pk(id: $deleteUsersByPkId) {
-      date_of_birth
-      email
-      id
-      lastname
-      name
-      phone
-    }
-  }
-`
-
 const USER_TEMPLATE = [
   { field: 'name', label: 'Name' },
   { field: 'lastname', label: 'Lastname' },
@@ -67,12 +43,10 @@ const USER_TEMPLATE = [
 const User = () => {
   const router = useRouter()
   const { id } = router.query
-  const { data, loading, error } = useQuery(GET_USER, {
-    variables: { usersByPkId: id },
-  })
-  const [deleteUser] = useMutation(DELETE_USER)
+  const { data, loading, error } = useUser(id)
+  const [deleteUser] = useDeleteUser(id)
 
-  if (loading) return <p>Loading...</p>
+  if (loading) return <Spinner />
   if (error) return <p>Error :(</p>
   if (data.users_by_pk === null) return <p>User not found</p>
 
@@ -89,11 +63,7 @@ const User = () => {
         <Button
           type="button"
           color="danger"
-          onClick={() =>
-            deleteUser({ variables: { deleteUsersByPkId: id } }).then(() =>
-              router.push('/users')
-            )
-          }
+          onClick={() => deleteUser().then(() => router.push('/users'))}
         >
           Delete
         </Button>

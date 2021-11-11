@@ -1,14 +1,15 @@
 import React, { useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { useRouter } from 'next/router'
-import { gql, useQuery } from '@apollo/client'
 import { useForm } from 'react-hook-form'
 import styled from 'styled-components'
+import useUser from 'hooks/useUser'
 
-import Input from 'components/Input'
-import Form from 'components/Form'
-import Button from 'components/Button'
-import DatePicker from 'components/DatePicker'
+import Input from './Input'
+import Form from './Form'
+import Button from './Button'
+import DatePicker from './DatePicker'
+import Spinner from './Spinner'
 
 const FormGroup = styled.div`
   display: grid;
@@ -17,19 +18,6 @@ const FormGroup = styled.div`
 `
 const StyledButton = styled(Button)`
   margin-top: 1rem;
-`
-
-const GET_USER = gql`
-  query Users_by_pk($usersByPkId: Int!) {
-    users_by_pk(id: $usersByPkId) {
-      date_of_birth
-      email
-      id
-      lastname
-      name
-      phone
-    }
-  }
 `
 
 const UserForm = ({ onSubmit }) => {
@@ -42,14 +30,7 @@ const UserForm = ({ onSubmit }) => {
     formState: { errors },
     reset,
   } = useForm()
-  const {
-    data: user,
-    loading: userLoading,
-    error: userError,
-  } = useQuery(GET_USER, {
-    variables: { usersByPkId: id },
-    skip: !id,
-  })
+  const { data: user, loading: userLoading, error: userError } = useUser(id)
 
   useEffect(() => {
     if (user) {
@@ -57,7 +38,7 @@ const UserForm = ({ onSubmit }) => {
     }
   }, [user])
 
-  if (userLoading) return 'Loading...'
+  if (userLoading) return <Spinner />
   if (userError) return `Error! ${userError.message}`
 
   return (
