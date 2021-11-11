@@ -13,7 +13,8 @@ const GET_USER = gql`
   }
 `
 
-export default (id) =>
+export default ({ id, options }) =>
   useQuery(GET_USER, {
     variables: { usersByPkId: id },
+    ...options,
   })

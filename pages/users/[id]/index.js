@@ -43,7 +43,7 @@ const USER_TEMPLATE = [
 const User = () => {
   const router = useRouter()
   const { id } = router.query
-  const { data, loading, error } = useUser(id)
+  const { data, loading, error } = useUser({ id })
   const [deleteUser] = useDeleteUser(id)
 
   if (loading) return <Spinner />

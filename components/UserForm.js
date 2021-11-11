@@ -30,7 +30,11 @@ const UserForm = ({ onSubmit }) => {
     formState: { errors },
     reset,
   } = useForm()
-  const { data: user, loading: userLoading, error: userError } = useUser(id)
+  const {
+    data: user,
+    loading: userLoading,
+    error: userError,
+  } = useUser({ id, options: { skip: !id } })
 
   useEffect(() => {
     if (user) {
@@ -39,7 +43,10 @@ const UserForm = ({ onSubmit }) => {
   }, [user, reset])
 
   if (userLoading) return <Spinner />
-  if (userError) return `Error! ${userError.message}`
+  if (userError) {
+    console.log('girdi')
+    return `Error! ${userError.message}`
+  }
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
