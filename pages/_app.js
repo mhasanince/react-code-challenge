@@ -10,7 +10,6 @@ import AuthenticatedLayout from 'layouts/AuthenticatedLayout'
 const GlobalStyles = createGlobalStyle`
   ${reset}
   * {
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,700;1,300&display=swap');
     font-family: 'Montserrat', sans-serif !important;
     box-sizing: border-box;
     color: ${({ theme }) => theme.colors.text};
