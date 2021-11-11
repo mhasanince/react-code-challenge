@@ -14,18 +14,21 @@ const Label = styled.label`
 const StyledDatePicker = styled(ReactDatePicker)`
   width: 100%;
   padding: 0.75rem;
-  margin-top: 0.5rem;
+  margin: 0.5rem 0;
   outline: none;
   border: ${(props) => `1px solid ${props.theme.colors.border}`};
 `
 
-const DatePicker = ({ label, name, control, error, ...props }) => {
+const DatePicker = ({ label, name, control, ...props }) => {
   const {
     field: { ref, value, onChange },
+    fieldState: { error },
   } = useController({
     name,
     control,
-    rules: { required: 'You must enter your birth date' },
+    rules: {
+      required: 'You must enter your birth date',
+    },
     defaultValue: new Date(),
   })
 
@@ -38,6 +41,11 @@ const DatePicker = ({ label, name, control, error, ...props }) => {
         {...props}
         ref={ref}
       />
+      {error && (
+        <Typography variant="subtitle" color="danger">
+          {error.message}
+        </Typography>
+      )}
     </Label>
   )
 }
@@ -46,11 +54,6 @@ DatePicker.propTypes = {
   label: PropTypes.string.isRequired,
   name: PropTypes.string.isRequired,
   control: PropTypes.shape().isRequired,
-  error: PropTypes.string,
-}
-
-DatePicker.defaultProps = {
-  error: null,
 }
 
 export default DatePicker
