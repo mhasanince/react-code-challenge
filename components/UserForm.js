@@ -66,8 +66,6 @@ const UserForm = ({ onSubmit }) => {
   if (userLoading) return <Spinner />
   if (userError) return `Error! ${userError.message}`
 
-  console.log(errors)
-
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
       <FormGroup>
