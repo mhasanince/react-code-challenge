@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import useUsers from 'hooks/useUsers'
@@ -17,7 +17,7 @@ const FlexContainer = styled.div`
 
 const ItemsRight = styled.div`
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   gap: 1rem;
 `
 
@@ -29,6 +29,7 @@ const Users = () => {
     () => ({ sortBy: [{ id: 'id', desc: true }] }),
     []
   )
+  const [search, setSearch] = useState('')
   const columns = useMemo(
     () => [
       {
@@ -72,6 +73,7 @@ const Users = () => {
       {(loading || deleteUserLoading) && <Spinner />}
       <FlexContainer>
         <ItemsRight>
+          <input name="search" onChange={(e) => setSearch(e.target.value)} />
           <Button type="button" onClick={() => router.push('/users/new-user')}>
             New User
           </Button>
@@ -79,7 +81,9 @@ const Users = () => {
         <Table
           initialState={initialState}
           columns={columns}
-          data={data?.users}
+          data={data?.users.filter((user) =>
+            user.name.toLowerCase().includes(search.toLowerCase())
+          )}
           onClickRow={({ id }) => router.push(`/users/${id}`)}
         />
       </FlexContainer>
